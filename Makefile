@@ -8,5 +8,6 @@ venv/bin/activate: requirements.txt
 
 clean:
 	rm -rf .venv
-	rm -rf .vscode/
+	rm -rf .idea/
+
 	find -iname "*.pyc" -delete
