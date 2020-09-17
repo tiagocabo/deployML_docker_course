@@ -6,10 +6,10 @@ from sklearn.metrics import accuracy_score
 
 app = Flask(__name__)
 
-swAgger = Swagger(app)
+swagger = Swagger(app)
 
-model = pd.read_pickle("/home/local/FARFETCH/tiago.cabo/Documents/private_projects/deployML_docker_course/rf.pkl")
-test_data = pd.read_csv('/home/local/FARFETCH/tiago.cabo/Documents/private_projects/deployML_docker_course/test_data.csv', index_col=0)
+model = pd.read_pickle("./rf.pkl")
+test_data = pd.read_csv('./test_data.csv', index_col=0)
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
@@ -44,7 +44,7 @@ def predict_file():
        """
     path = request.files.get("input_file")
     print('PATH ', path)
-    path = '/home/local/FARFETCH/tiago.cabo/Documents/private_projects/deployML_docker_course/API_data.csv'
+    path = './API_data.csv'
     test_data = pd.read_csv(path, index_col = 0)
 
     prediction = model.predict(test_data.iloc[:, :4].values)
@@ -53,5 +53,7 @@ def predict_file():
     print("actual res: ", prediction)
 
     return str(list(prediction))
+
+
 if __name__ == '__main__':
-    app.run()
+    app.run(host='0.0.0.0', port=5000, debug=True)
